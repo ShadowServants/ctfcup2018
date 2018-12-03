@@ -21,7 +21,7 @@
 Он не требует авторизации и умеет изменять баланс аккаунта одним запросом.
 
 Смотри 
-[эксплоит](https://github.com/jnovikov/ctfcup2018/blob/master/exploits/black_exchange/public_banking.py)
+[эксплоит](https://github.com/shadowservants/ctfcup2018/blob/master/exploits/black_exchange/public_banking.py)
 
 #### Как закрыть дыру?
 Уберите порт  9000 из публичных в docker-compose.yml
@@ -51,7 +51,7 @@
 и сможем брать новые монетки снова и снова
 
 Смотри
-[эксплоит](https://github.com/jnovikov/ctfcup2018/blob/master/exploits/black_exchange/integer_overflow.py)
+[эксплоит](https://github.com/shadowservants/ctfcup2018/blob/master/exploits/black_exchange/integer_overflow.py)
 
 #### Про майнинг монет
 
@@ -203,7 +203,7 @@
 
 `account_name = f"\r\n\r\nPOST /api/account/change?account={account_name}&change=9999 HTTP/1.1\r\nHost: {root_url}"`
    
-Смотри [эксплоит](https://github.com/jnovikov/ctfcup2018/blob/master/exploits/black_exchange/ssrf_contest_winning_exploit.py)
+Смотри [эксплоит](https://github.com/shadowservants/ctfcup2018/blob/master/exploits/black_exchange/ssrf_contest_winning_exploit.py)
 
 #### Как закрыть дыру?
 
