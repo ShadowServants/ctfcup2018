@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+{% if form.errors %}
+    <p style="color: white" class='bg-danger rounded p-2'>Error</p>
+        <label style="color: white">
+        {% for k,v in form.errors.items %}
+            <p>{{ k }} : {{ v }}</p>
+        {% endfor %}
+{% endif %}
+
+<h3>Create new group</h3>
+<form action='' method='post'>
+    {% csrf_token %}
+    {% for row in form %}
+        <label style="color: white">
+            Group name:
+            {{ row }}
+        </label>
+    {% endfor %}
+    <input type='submit' value='Create' class='button'>
+</form>
+
+{% endblock %}

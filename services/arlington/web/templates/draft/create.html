@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+{% if message %}
+    <p class='bg-danger rounded p-2'>{{ message }}</p>
+{% endif %}
+
+<h3>Create draft </h3>
+    <h5><a href="#" onclick="window.history.go(-1); return false">&larr; back </a></h5>
+
+<form action='' method='post'>
+    {% csrf_token %}
+    {% for row in form %}
+        <label style="color: white;">
+            {% if row.name == "title" %}
+                Name of the draft:
+            {% else %}
+                Draft contents:
+            {% endif %}
+        {{ row }}
+        </label>
+    {% endfor %}
+    <input type='submit' value='Create draft' class='button'>
+</form>
+
+{% endblock %}

@@ -1,0 +1,18 @@
+version: '2'
+services:
+  tcp:
+    restart: unless-stopped
+    network_mode: "host"
+    build: .
+    ports:
+      - "7777:7777"
+    volumes:
+      - .:/app
+    command: "make run --directory /app"
+    ulimits:
+      nproc: 10240
+      nofile:
+        soft: 10240
+        hard: 13000
+    mem_limit: 512m
+    mem_reservation: 128m

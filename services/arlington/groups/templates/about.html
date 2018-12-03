@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+    {% if message %}
+        <p class='bg-danger rounded p-2'>{{ message }}</p>
+    {% endif %}
+
+
+    <h3 style="color: white">HELP / Groups</h3>
+    <h5><a href="/">&larr; back home</a></h5>
+
+    <p style="color: white">
+        Group is a main way to unite knowledge after the Great Boom. <br />
+        You can create documents and share them within group.
+        You can only see documents in the group if you are a part of it!
+    </p>
+{% endblock %}

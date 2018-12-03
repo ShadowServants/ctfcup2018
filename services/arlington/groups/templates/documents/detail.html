@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+    {% if message %}
+        <p class='bg-danger rounded p-2'>{{ message }}</p>
+    {% endif %}
+
+
+    <div class='card'>
+        <div class="card-divider">
+            <h4>{{ object.title|truncatechars:140 }}</h4>
+        </div>
+        <div class='card-section'>
+            <pre>{{ object.text }}</pre>
+
+            {% if object.rendered_file == '' %}
+                <p>Render temporary unavailable</p>
+            {% else %}
+                <p>Get the <a href="/{{ object.rendered_file }}">render</a></p>
+            {% endif %}
+        </div>
+    </div>
+
+
+{% endblock %}

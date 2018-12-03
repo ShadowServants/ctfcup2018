@@ -1,0 +1,63 @@
+version: '2'
+services:
+
+  web:
+    depends_on:
+      - elastic
+      - redis
+    build: .
+    volumes:
+    - ./data/:/app/data
+
+    command: sh -c "python3 manage.py migrate && gunicorn arlington.wsgi -k gevent -w 3 -b 0.0.0.0:8000"
+    mem_limit: 612m
+    mem_reservation: 128m
+    restart: on-failure
+
+  celery:
+    depends_on:
+      - web
+    build: .
+    volumes:
+    - ./data/:/app/data
+    command: sh -c "python3 manage.py migrate && celery worker -A arlington -l info"
+    mem_limit: 256m
+    mem_reservation: 128m
+    restart: on-failure
+
+  elastic:
+    image: elasticsearch:5-alpine
+    environment:
+    - "ES_JAVA_OPTS=-Xms2048m -Xmx2048m"
+    - "discovery.type=single-node"
+    volumes:
+    - ./elastic/:/usr/share/elasticsearch/data
+    restart: on-failure
+    mem_limit: 3000m
+    mem_reservation: 2048m
+
+
+  redis:
+    image: redis:5-alpine
+    mem_limit: 256m
+    mem_reservation: 128m
+    restart: on-failure
+
+  nginx:
+    depends_on:
+      - web
+    image: nginx:1.15.6-alpine
+    volumes:
+    - ./nginx/:/etc/nginx/conf.d
+    - ./data/:/var/uploads/data/
+    - ./web/static/:/var/static/
+    ports:
+    - "8888:80"
+    mem_reservation: 128m
+    mem_limit: 256m
+    restart: on-failure
+
+
+
+
+

@@ -1,0 +1,37 @@
+.translucent-form-overlay {
+    max-width: 500px;
+    width: 100%;
+    background-color: rgba(54, 54, 54, 0.8);
+    /*background-color: rgba(137, 137, 137, 0.5);*/
+    padding: 20px;
+    color: #fefefe;
+
+    -webkit-box-shadow: 0px 0px 174px 5px rgba(255, 255, 255, 0.57);
+    -moz-box-shadow: 0px 0px 174px 5px rgba(255, 255, 255, 0.57);
+    box-shadow: 0px 0px 174px 5px rgba(255, 255, 255, 0.57);
+}
+
+.translucent-form-overlay .columns.row {
+    display: block;
+}
+
+.translucent-form-overlay h3, .translucent-form-overlay label {
+    color: #fefefe;
+}
+
+.translucent-form-overlay input, .translucent-form-overlay select {
+    color: #8a8a8a;
+    /*color: #e8e8e8;*/
+}
+
+.translucent-form-overlay input::-webkit-input-placeholder {
+    color: #8a8a8a;
+}
+
+.translucent-form-overlay input:-ms-input-placeholder {
+    color: #8a8a8a;
+}
+
+.translucent-form-overlay input::placeholder {
+    color: #8a8a8a;
+}

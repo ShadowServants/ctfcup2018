@@ -1,0 +1,49 @@
+Это API-only платформа для торговли ценными секретами.
+Деньги за продажу секретов перенаправляются на обеспечение тепла в помещениях Сколково.
+
+Взгляни на то, что она умеет:
+
+: Бесполезный index
+> curl localhost:9999/
+< {"version":"1.0.0","module":"exchange-user-api"}
+
+: Регистрация на сервере. account должен быть длинным секретным токеном, если злоумышленник его узнает - он может представиться вами
+> curl -XPOST localhost:9999/register --data 'account=alagunto'
+< {"status":"ok"}
+
+: Получение баланса аккаунта
+> curl localhost:9999/balance?account=alagunto
+< {"status":"ok","result":0}
+
+: Получить бесплатную монету. Это нельзя делать слишком часто (минимальный промежуток для получения -- 30 минут)
+> curl -XPOST localhost:9999/free_coin --data "account=alagunto"
+< {"status":"ok","result":1}
+> curl -XPOST localhost:9999/free_coin --data "account=alagunto"
+< {"status":"bad","reason":"too_early"}
+
+: Выставить секрет на продажу (минимальная цена — 1 монета)
+> curl -XPOST localhost:9999/place_secret --data "account=alagunto&secret=ilovecoffee&price=5&description=my%20dirtiest%20secret"
+< {"status":"ok","result":["added_for_price",5]}
+
+: Посмотреть мои секреты на продажу
+> curl "localhost:9999/my_secrets?account=alagunto&page=1"
+< {"status":"ok","result":[{"description":"my dirtiest secret","price":"5","secret":"ilovecoffee","id":1}]}
+
+: Посмотреть все секреты на продажу (постраничная навигация по 10 элементов на страницу)
+> curl localhost:9999/placed_secrets?page=1
+< {"status":"ok","result":{"current_page":1,"data":[{"id":1,"description":"my dirtiest secret","price":"5","created_at":"2018-12-01 01:18:58","updated_at":"2018-12-01 01:18:58"}],"first_page_url":"http:\/\/localhost:9999\/placed_secrets?page=1","from":1,"last_page":1,"last_page_url":"http:\/\/localhost:9999\/placed_secrets?page=1","next_page_url":null,"path":"http:\/\/localhost:9999\/placed_secrets","per_page":10,"prev_page_url":null,"to":1,"total":1}}
+
+: Купить секрет (обычно стоит немало бабла)
+> curl -XPOST localhost:9999/free_coin --data "account=alagunto"
+< {"status":"ok","result":2}
+> curl -XPOST localhost:9999/free_coin --data "account=alagunto"
+< {"status":"ok","result":3}
+> curl -XPOST localhost:9999/free_coin --data "account=alagunto"
+< {"status":"ok","result":4}
+> curl -XPOST localhost:9999/free_coin --data "account=alagunto"
+< {"status":"ok","result":5}
+: (cпустя три часа)
+> curl -XPOST localhost:9999/buy_secret --data "secret_id=1&account=alagunto"
+< {"status":"ok","result":{"meta":{"id":1,"description":"my dirtiest secret","price":"5","created_at":"2018-12-01 01:18:58","updated_at":"2018-12-01 01:18:58"},"secret":"ilovecoffee"}}
+> curl localhost:9999/balance?account=alagunto
+< {"status":"ok","result":0}

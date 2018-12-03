@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+    {% if message %}
+        <p class='bg-danger rounded p-2'>{{ message }}</p>
+    {% endif %}
+
+
+    <h3 style="color: white">HELP / Personal drafts</h3>
+    <h5><a href="/">&larr; back home</a></h5>
+
+    <p style="color: white">
+        Personal drafts are <b>secret</b> and unavailable to other users. <br />
+        You can use them as a storage for your secret data. We will never share it to anyone.
+        You don't have any limit on a count of your personal drafts. Have a good day!
+    </p>
+{% endblock %}

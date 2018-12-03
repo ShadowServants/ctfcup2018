@@ -1,0 +1,105 @@
+{% load staticfiles %}
+
+<!doctype html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>Arlington | Knowledge base</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.5.0/dist/css/foundation.min.css"
+          integrity="sha256-VEEaOnBKVRoYPn4AID/tY/XKVxKEqXstoo/xZ6nemak= sha384-D46t32f421/hB30qwnim2pIcisNN5GU9+6m2Mfnd3dKpTSFidZLa08/1StEiCFId sha512-WkgzH8VKemDfwrp18r+wgbx+oHXOkfd2kJs7ocAXdGDgonXDXh88E90IRtRZRXtO0IHprxYHYlY14h+wyTsUDA=="
+          crossorigin="anonymous">
+    <link rel="icon" href="/static/logo.ico">
+    <link rel="stylesheet" href="/static/css/footer.css">
+    <link rel="stylesheet" href="/static/css/login-form.css">
+
+    <style type="text/css">
+        /* Fuck everyone */
+
+        html {
+            min-width: 1300px;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            background: url("/static/connectwork.png");
+            min-width: 1300px;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        h1, h2, h3 {
+            color: white;
+        }
+    </style>
+
+</head>
+<body>
+<header>
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <ul class="dropdown menu" data-dropdown-menu>
+                <li class="menu-text" style="color: black; cursor: pointer;" onclick="window.location='/';">
+                    <span>Arlington</span>
+                </li>
+                {% if user.is_authenticated %}
+                    <li>
+                        <a href="/home">Home</a>
+                    </li>
+                    <li>
+                        <a href="{% url "draft_list" %}">Drafts</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'groups:group_list' %}">Groups</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="top-bar-right">
+            <ul class="menu">
+                {% if user.is_authenticated %}
+                    <li class='nav-item'>
+                        <a class='nav-link' href='{% url "logout" %}'>Logout ({{ user.username }},
+                            id: {{ user.id }})</a>
+                    </li>
+                {% else %}
+                    <li class='nav-item'>
+                        <a class='nav-link' href='{% url "login" %}'>Login</a>
+                    </li>
+                    <li class='nav-item'>
+                        <a class='nav-link' href='{% url "register" %}'>Register</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</header>
+
+<div style="padding: 30px; margin: 0;">
+    {% block main %}{% endblock %}
+</div>
+
+<div id="footer">
+    <div class="grid-x" style="width: 100%;">
+        <div class="cell small-9">
+            <p style="font-size: 1.1em; word-break: keep-all; white-space: nowrap;">
+                Powered by VaultServants. Send claims to <b>/dev/null</b>.
+            </p>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.5.0/dist/js/foundation.min.js"
+        integrity="sha256-GZq6aeugpWo25iH//1eKmeK6FHCf+6KXTfoUpkCqPCA= sha384-vjxUQtbGw5FJMigaaFpXYyxoHHLb7LbvRywnMZOiPJeh5j9sl2rnmQ3iucuegRm8 sha512-h7tIMIX/opZXfWkcTDbkO+nT0LePyAAwDacfYhWtgGUidV+Kkh3eesW52fPSxKEsw3rgywKhQvghNLT4eDuUyw=="
+        crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $(document).foundation();
+</script>
+</body>
+</html>

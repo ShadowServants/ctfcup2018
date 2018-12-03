@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <h2>
+        <img src="/static/logo_white.svg" width="64" height="64"/>
+        Welcome home!
+    </h2>
+    <br>
+
+    <div class="grid-x">
+        <div class="cell small-4">
+            <div class="card" style="width: 400px;">
+                <div class="card-divider" style="color: black;">
+                    Your personal drafts ({{ drafts_count }} pcs)
+                </div>
+                <div class="card-section">
+                    {#                    <h4>Or <a href="{% url "draft_list" %}">see</a> created</h4>#}
+                    {% if drafts_count > 0 %}
+                        <span>Last draft:
+                            <b>{{ last_draft.title }}</b> &mdash; {{ last_draft_text_short }}
+                        </span>
+                    {% else %}
+                        <hspan>You don't have drafts yet</hspan>
+                    {% endif %}
+                    <ul class="menu">
+                        <li><a href="{% url "draft_create" %}"><span>Create new</span></a></li>
+                        <li><a href="{% url "draft_list" %}"><span>List all</span></a></li>
+                        <li><a href="{% url "draft_about" %}"><span>What is it?</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="cell small-4">
+            <div class="card" style="width: 400px;">
+                <div class="card-divider" style="color: black;">
+                    Your groups ({{ groups_count }} pcs)
+                </div>
+                <div class="card-section">
+                    {#                    <h4>Or <a href="{% url "draft_list" %}">see</a> created</h4>#}
+                    {% if groups_count > 0 %}
+                        <span>Last group:
+                            <a href="/groups/{{ last_group.id }}"><b>{{ last_group.name }}</b></a>
+                        </span>
+                    {% else %}
+                        <span>You don't have groups yet</span>
+                    {% endif %}
+                    <ul class="menu">
+                        <li><a href="{% url "groups:group_create" %}"><span>Create new</span></a></li>
+                        <li><a href="{% url "groups:group_list" %}"><span>List my groups</span></a></li>
+                        <li><a href="{% url "groups:group_about" %}"><span>What is it?</span></a></li>
+                    </ul>
+                    <form id="join-group-form">
+                        <div class="input-group" style="margin-bottom: 0;">
+                            <input class="input-group-field" type="text" placeholder="Invide code" id="join-group-code">
+                            <div class="input-group-button">
+                                <input type="submit" class="button" value="Join group" id="join-group-button">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+           $("#join-group-form").on("submit", function() {
+                var code = $("#join-group-code").val();
+                window.location.replace("/groups/join/" + code + "/");
+                return false;
+           });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <h3>Brotherhood {{ object.name }} (users: {{ object.user_set.count }} pcs) welcomes you!</h3>
+    <h5 style="color: white">Invite code: {{ invite_code }}</h5>
+
+    <div class="grid-x">
+        <div class="columns small-6">
+            <div class="card">
+                <div class="card-section">
+                    <ul class="menu">
+                        <li><a href="{% url 'groups:document_create' object.id %}"><span>Create new document</span></a>
+                        </li>
+                        <li><a href="{% url 'groups:documents_list' object.id %}"><span>List documents</span></a></li>
+                    </ul>
+
+                    <form id="search-form">
+                        <div class="input-group" style="margin-bottom: 0; margin-top: 1em;">
+                            <input class="input-group-field" type="text" placeholder="Taxes report..." id="search-value">
+                            <div class="input-group-button">
+                                <input type="submit" class="button" value="Search document">
+                            </div>
+                        </div>
+                    </form>
+                    <script>
+                        $(document).ready(function() {
+                            $("#search-form").on("submit", function() {
+                                var val = $("#search-value").val();
+                                window.location.replace("/groups/{{ object.id }}/documents/search?q=" + val);
+                                return false;
+                            });
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

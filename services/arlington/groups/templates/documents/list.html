@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block main %}
+    {% if message %}
+        <p class='bg-danger rounded p-2'>{{ message }}</p>
+    {% endif %}
+
+
+    {% for doc in docs %}
+        {% if forloop.first %}
+            <div class='row'>
+                {% else %}
+                {% if forloop.counter0|divisibleby:"4" %}
+                    </div>
+                    <div class='row'>
+                {% endif %}
+        {% endif %}
+
+    <div class='card'>
+        <div class="card-divider">
+            <h4>{{ doc.title|truncatechars:140 }}</h4>
+        </div>
+        <div class='card-section'>
+            <pre>{{ doc.text }}</pre>
+
+            {% if doc.rendered_file == '' %}
+                <p>Render temporary unavailable</p>
+            {% else %}
+                <p>Get the <a href="/{{ doc.rendered_file }}">render</a></p>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if forloop.last %}
+        </div>
+    {% endif %}
+        {% empty %}
+        <h3>No documents yet!</h3>
+    {% endfor %}
+    <h5><a onclick="window.history.go(-1)">&larr; go back</a></h5>
+
+{% endblock %}

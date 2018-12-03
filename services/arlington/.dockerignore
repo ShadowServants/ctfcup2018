@@ -1,0 +1,4 @@
+data/*
+venv/*
+web/static/*
+elastic/*

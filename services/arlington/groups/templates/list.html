@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+    {% if message %}
+        <p class='bg-danger rounded p-2'>{{ message }}</p>
+    {% endif %}
+
+    {% for group in groups %}
+        {% if forloop.first %}
+            <div class='row'>
+                {% else %}
+                {% if forloop.counter0|divisibleby:"4" %}
+                    </div>
+                    <div class='row'>
+                {% endif %}
+        {% endif %}
+
+    <div class='card'>
+        <div class="card-divider">
+            <h4> {{ group.name|truncatechars:140 }}</h4>
+        </div>
+        <div class='card-section'>
+            <p>Users in group: <b>{{ group.user_set.count }}</b></p>
+            <p><a href="{% url 'groups:group_detail' group.id %}">Details</a></p>
+        </div>
+    </div>
+
+    {% if forloop.last %}
+        </div>
+    {% endif %}
+    {% empty %}
+        <h3>No groups now... <a href="{% url "groups:group_create" %}">Create new!</a></h3>
+        <h5><a href="/">&larr; to main page</a></h5>
+    {% endfor %}
+
+{% endblock %}
